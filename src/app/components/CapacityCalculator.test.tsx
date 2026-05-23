@@ -66,4 +66,31 @@ describe('CapacityCalculator - Business Logic', () => {
     expect(screen.getByText('Alto Riesgo - Rechazado Automáticamente')).toBeInTheDocument();
     expect(screen.getByText('45.8% Endeudamiento')).toBeInTheDocument();
   });
+
+  /**
+   * Prueba 10
+   * HU-01: Cálculo de Capacidad de Pago - Edge Case
+   * Criterio de Aceptación:
+   * - Si no hay datos completos (vacíos), el estado debe ser Idle (Ingrese datos para calcular).
+   */
+  it('Debe mostrar estado por defecto si se borran los datos', () => {
+    render(<CapacityCalculator />);
+
+    const inputs = screen.getAllByRole('spinbutton');
+    const totalGanadoInput = inputs[0]; 
+    const cuotaInput = inputs[1]; 
+
+    fireEvent.change(totalGanadoInput, { target: { value: '10000' } });
+    fireEvent.change(cuotaInput, { target: { value: '2000' } });
+
+    // Estado Seguro
+    expect(screen.getByText('Capacidad de Pago Aprobada')).toBeInTheDocument();
+
+    // Borrar cuota
+    fireEvent.change(cuotaInput, { target: { value: '' } });
+
+    // Vuelve al estado inicial
+    expect(screen.getByText('Ingrese datos para calcular')).toBeInTheDocument();
+    expect(screen.getByText('0.0% Endeudamiento')).toBeInTheDocument();
+  });
 });

@@ -59,4 +59,43 @@ describe('LoanApproval - Business Logic', () => {
 
     expect(screen.getByText(/Monto excede el límite de autonomía/i)).toBeInTheDocument();
   });
+
+  /**
+   * Prueba 11
+   * HU-06: Aprobación Directa - Caso Límite
+   * Criterio de Aceptación:
+   * - Si el monto es exactamente 20,000 USD, debe mostrar "Aprobar Crédito" y no derivar a comité.
+   */
+  it('Debe mostrar "Aprobar Crédito" si el monto es exactamente 20000', () => {
+    render(<LoanApproval />);
+    
+    const amountInput = screen.getByPlaceholderText('0.00');
+    fireEvent.change(amountInput, { target: { value: '20000' } });
+    
+    const actionButton = screen.getByRole('button');
+    expect(actionButton).not.toBeDisabled();
+    expect(screen.getByText('Aprobar Crédito')).toBeInTheDocument();
+    expect(screen.queryByText(/Monto excede el límite de autonomía/i)).not.toBeInTheDocument();
+  });
+
+  /**
+   * Prueba 12
+   * HU-05: Validación de Monto - Limpiar input
+   * Criterio de Aceptación:
+   * - El botón debe volver a deshabilitarse si se borra el contenido del input.
+   */
+  it('Debe deshabilitar el botón si se borra el monto ingresado', () => {
+    render(<LoanApproval />);
+    
+    const amountInput = screen.getByPlaceholderText('0.00');
+    fireEvent.change(amountInput, { target: { value: '1000' } });
+    
+    const actionButton = screen.getByRole('button');
+    expect(actionButton).not.toBeDisabled();
+
+    // Borrar el input
+    fireEvent.change(amountInput, { target: { value: '' } });
+    
+    expect(actionButton).toBeDisabled();
+  });
 });
