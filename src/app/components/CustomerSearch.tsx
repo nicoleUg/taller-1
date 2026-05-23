@@ -15,6 +15,48 @@ const EXTENSIONS = [
   { value: "PA", label: "Pando" },
 ];
 
+const FOUND_PROBABILITY = 0.3;
+const SEARCH_DELAY_MS = 1500;
+
+function CustomerFoundResult({ name, score }: { name: string; score: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className="mt-6 p-4 bg-emerald-50 border border-emerald-100 rounded-lg flex items-start gap-3"
+    >
+      <CheckCircle className="w-6 h-6 text-emerald-500 shrink-0 mt-0.5" />
+      <div>
+        <h4 className="font-semibold text-emerald-800 text-lg">Cliente Encontrado</h4>
+        <p className="text-emerald-700">
+          <span className="font-medium">Nombre:</span> {name}
+        </p>
+        <p className="text-emerald-600 text-sm mt-1">Historial Crediticio: {score}</p>
+      </div>
+    </motion.div>
+  );
+}
+
+function CustomerNotFoundResult() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className="mt-6 p-4 bg-amber-50 border border-amber-100 rounded-lg flex items-start gap-3"
+    >
+      <UserX className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
+      <div>
+        <h4 className="font-semibold text-amber-800 text-lg">Cliente Nuevo</h4>
+        <p className="text-amber-700">
+          Este C.I. no está registrado en el sistema. Proceder con el registro de nuevo cliente.
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
 export function CustomerSearch() {
   const [ci, setCi] = useState("");
   const [extension, setExtension] = useState("LP");
@@ -24,10 +66,9 @@ export function CustomerSearch() {
   const handleSearch = () => {
     if (!ci) return;
     setStatus("searching");
-    // Mock API 
+    
     setTimeout(() => {
-      
-      const isFound = Math.random() > 0.3;
+      const isFound = Math.random() > FOUND_PROBABILITY;
       if (isFound) {
         setCustomerData({
           name: "Juan Pérez Tórrez",
@@ -38,7 +79,7 @@ export function CustomerSearch() {
         setCustomerData(null);
         setStatus("not-found");
       }
-    }, 1500);
+    }, SEARCH_DELAY_MS);
   };
 
   return (
@@ -94,45 +135,10 @@ export function CustomerSearch() {
 
         <AnimatePresence mode="wait">
           {status === "found" && customerData && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mt-6 p-4 bg-emerald-50 border border-emerald-100 rounded-lg flex items-start gap-3"
-            >
-              <CheckCircle className="w-6 h-6 text-emerald-500 shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-emerald-800 text-lg">
-                  Cliente Encontrado
-                </h4>
-                <p className="text-emerald-700">
-                  <span className="font-medium">Nombre:</span> {customerData.name}
-                </p>
-                <p className="text-emerald-600 text-sm mt-1">
-                  Historial Crediticio: {customerData.score}
-                </p>
-              </div>
-            </motion.div>
+            <CustomerFoundResult name={customerData.name} score={customerData.score} />
           )}
 
-          {status === "not-found" && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mt-6 p-4 bg-amber-50 border border-amber-100 rounded-lg flex items-start gap-3"
-            >
-              <UserX className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-semibold text-amber-800 text-lg">
-                  Cliente Nuevo
-                </h4>
-                <p className="text-amber-700">
-                  Este C.I. no está registrado en el sistema. Proceder con el registro de nuevo cliente.
-                </p>
-              </div>
-            </motion.div>
-          )}
+          {status === "not-found" && <CustomerNotFoundResult />}
         </AnimatePresence>
       </CardContent>
     </Card>

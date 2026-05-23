@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Calculator, DollarSign, TrendingUp, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Calculator, DollarSign, TrendingUp } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
 import { motion } from "motion/react";
 import { clsx } from "clsx";
@@ -14,32 +14,43 @@ export function CapacityCalculator() {
   const [status, setStatus] = useState<"safe" | "warning" | "danger" | "idle">("idle");
 
   useEffect(() => {
-    if (typeof totalGanado === "number" && totalGanado > 0) {
-      const discount = totalGanado * AFP_RATE;
-      const net = totalGanado - discount;
-      setLiquidoPagable(net);
-
-      if (typeof cuota === "number" && cuota > 0) {
-        const calculatedRatio = (cuota / net) * 100;
-        setRatio(Math.min(calculatedRatio, 100)); 
-
-        if (calculatedRatio < 30) {
-          setStatus("safe");
-        } else if (calculatedRatio < 40) {
-          setStatus("warning");
-        } else {
-          setStatus("danger");
-        }
-      } else {
-        setRatio(0);
-        setStatus("idle");
-      }
-    } else {
+    if (typeof totalGanado !== "number" || totalGanado <= 0) {
       setLiquidoPagable(0);
       setRatio(0);
       setStatus("idle");
+      return;
+    }
+
+    const discount = totalGanado * AFP_RATE;
+    const net = totalGanado - discount;
+    setLiquidoPagable(net);
+
+    if (typeof cuota !== "number" || cuota <= 0) {
+      setRatio(0);
+      setStatus("idle");
+      return;
+    }
+
+    const calculatedRatio = (cuota / net) * 100;
+    setRatio(Math.min(calculatedRatio, 100)); 
+
+    if (calculatedRatio < 30) {
+      setStatus("safe");
+    } else if (calculatedRatio < 40) {
+      setStatus("warning");
+    } else {
+      setStatus("danger");
     }
   }, [totalGanado, cuota]);
+
+  const getTextColorClass = () => {
+    switch (status) {
+      case "safe": return "text-emerald-600";
+      case "warning": return "text-amber-600";
+      case "danger": return "text-rose-600";
+      default: return "text-slate-400";
+    }
+  };
 
   const getStatusColor = () => {
     switch (status) {
@@ -128,11 +139,7 @@ export function CapacityCalculator() {
              {/* Traffic Light Bar */}
              <div className="mt-6 pt-4 border-t border-slate-200">
                 <div className="flex justify-between text-sm mb-2 font-medium">
-                  <span className={clsx(
-                    status === 'safe' ? 'text-emerald-600' : 
-                    status === 'warning' ? 'text-amber-600' : 
-                    status === 'danger' ? 'text-rose-600' : 'text-slate-400'
-                  )}>
+                  <span className={getTextColorClass()}>
                     {getStatusText()}
                   </span>
                   <span className="text-slate-500">{ratio.toFixed(1)}% Endeudamiento</span>

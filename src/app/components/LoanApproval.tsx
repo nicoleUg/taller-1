@@ -5,6 +5,13 @@ import { motion, AnimatePresence } from "motion/react";
 import { clsx } from "clsx";
 
 const COMMITTEE_LIMIT = 20000;
+const APPROVAL_DELAY_MS = 3000;
+
+const getButtonClasses = (isDisabled: boolean, isCommittee: boolean) => {
+  if (isDisabled) return "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none";
+  if (isCommittee) return "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/30 ring-4 ring-blue-500/20";
+  return "bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-500/30 ring-4 ring-emerald-500/20";
+};
 
 export function LoanApproval() {
   const [amount, setAmount] = useState<number | "">("");
@@ -18,7 +25,7 @@ export function LoanApproval() {
     setTimeout(() => {
       setIsApproved(false);
       setAmount("");
-    }, 3000);
+    }, APPROVAL_DELAY_MS);
   };
 
   return (
@@ -77,11 +84,7 @@ export function LoanApproval() {
               disabled={isDisabled}
               className={clsx(
                 "w-full md:w-auto min-w-[280px] px-8 py-5 rounded-xl font-bold text-lg shadow-lg transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden group",
-                isDisabled 
-                  ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none" 
-                  : isCommittee 
-                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/30 ring-4 ring-blue-500/20" 
-                    : "bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-500/30 ring-4 ring-emerald-500/20"
+                getButtonClasses(isDisabled, isCommittee)
               )}
             >
               <span className="relative z-10 flex items-center gap-3">

@@ -68,10 +68,10 @@ describe('LoanApproval - Business Logic', () => {
    */
   it('Debe mostrar "Aprobar Crédito" si el monto es exactamente 20000', () => {
     render(<LoanApproval />);
-    
+
     const amountInput = screen.getByPlaceholderText('0.00');
     fireEvent.change(amountInput, { target: { value: '20000' } });
-    
+
     const actionButton = screen.getByRole('button');
     expect(actionButton).not.toBeDisabled();
     expect(screen.getByText('Aprobar Crédito')).toBeInTheDocument();
@@ -86,16 +86,15 @@ describe('LoanApproval - Business Logic', () => {
    */
   it('Debe deshabilitar el botón si se borra el monto ingresado', () => {
     render(<LoanApproval />);
-    
+
     const amountInput = screen.getByPlaceholderText('0.00');
     fireEvent.change(amountInput, { target: { value: '1000' } });
-    
+
     const actionButton = screen.getByRole('button');
     expect(actionButton).not.toBeDisabled();
 
-    // Borrar el input
     fireEvent.change(amountInput, { target: { value: '' } });
-    
+
     expect(actionButton).toBeDisabled();
   });
 });
