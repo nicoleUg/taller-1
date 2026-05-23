@@ -1,15 +1,25 @@
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { CustomerSearch } from './CustomerSearch';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom';
+import { supabase } from '../lib/supabase';
+
+vi.mock('../lib/supabase', () => ({
+  supabase: {
+    from: vi.fn(() => ({
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      maybeSingle: vi.fn()
+    }))
+  }
+}));
 
 describe('CustomerSearch - Business Logic', () => {
   beforeEach(() => {
-    vi.useFakeTimers();
+    vi.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.useRealTimers();
     vi.restoreAllMocks();
   });
 
@@ -36,21 +46,29 @@ describe('CustomerSearch - Business Logic', () => {
    * - Al encontrar un cliente en el sistema, mostrar el panel de "Cliente Encontrado" con su nombre y score.
    */
   it('Debe mostrar "Cliente Encontrado" cuando la búsqueda es exitosa', async () => {
-    vi.spyOn(Math, 'random').mockReturnValue(0.9);
+    // Mock successful Supabase response
+    const mockQuery = {
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      maybeSingle: vi.fn().mockResolvedValue({
+        data: { nombre_completo: 'Juan Pérez Tórrez', historial_crediticio: 'A (Excelente)' },
+        error: null
+      })
+    };
+    (supabase.from as any).mockReturnValue(mockQuery);
 
     render(<CustomerSearch />);
 
     const ciInput = screen.getByPlaceholderText('Ej: 1234567');
-    fireEvent.change(ciInput, { target: { value: '9876543' } });
+    fireEvent.change(ciInput, { target: { value: '1234567' } });
 
     const verifyButton = screen.getByRole('button', { name: /Verificar/i });
     fireEvent.click(verifyButton);
 
-    act(() => {
-      vi.advanceTimersByTime(1500);
+    await waitFor(() => {
+      expect(screen.getByText('Cliente Encontrado')).toBeInTheDocument();
     });
-
-    expect(screen.getByText('Cliente Encontrado')).toBeInTheDocument();
+    
     expect(screen.getByText(/Juan Pérez Tórrez/i)).toBeInTheDocument();
   });
 
@@ -60,8 +78,16 @@ describe('CustomerSearch - Business Logic', () => {
    * - Al no encontrar un cliente en el sistema, indicar "Cliente Nuevo".
    */
   it('Debe mostrar "Cliente Nuevo" cuando la búsqueda no retorna resultados', async () => {
-    // Forzamos Math.random para que sea menor o igual a 0.3 (ej. 0.1)
-    vi.spyOn(Math, 'random').mockReturnValue(0.1);
+    // Mock empty Supabase response
+    const mockQuery = {
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      maybeSingle: vi.fn().mockResolvedValue({
+        data: null,
+        error: null
+      })
+    };
+    (supabase.from as any).mockReturnValue(mockQuery);
 
     render(<CustomerSearch />);
 
@@ -71,12 +97,10 @@ describe('CustomerSearch - Business Logic', () => {
     const verifyButton = screen.getByRole('button', { name: /Verificar/i });
     fireEvent.click(verifyButton);
 
-    // Avanzar el tiempo 1500ms
-    act(() => {
-      vi.advanceTimersByTime(1500);
+    await waitFor(() => {
+      expect(screen.getByText('Cliente Nuevo')).toBeInTheDocument();
     });
-
-    expect(screen.getByText('Cliente Nuevo')).toBeInTheDocument();
+    
     expect(screen.getByText(/Este C.I. no está registrado en el sistema/i)).toBeInTheDocument();
   });
 });

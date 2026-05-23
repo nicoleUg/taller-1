@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Search, CheckCircle, UserX, Loader2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
 import { motion, AnimatePresence } from "motion/react";
+import { supabase } from "../lib/supabase";
 
 const EXTENSIONS = [
   { value: "LP", label: "La Paz" },
@@ -63,23 +64,35 @@ export function CustomerSearch() {
   const [status, setStatus] = useState<"idle" | "searching" | "found" | "not-found">("idle");
   const [customerData, setCustomerData] = useState<{ name: string; score: string } | null>(null);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!ci) return;
     setStatus("searching");
     
-    setTimeout(() => {
-      const isFound = Math.random() > FOUND_PROBABILITY;
-      if (isFound) {
+    try {
+      const { data, error } = await supabase
+        .from('clientes')
+        .select('nombre_completo, historial_crediticio')
+        .eq('ci', ci)
+        .eq('extension', extension)
+        .maybeSingle();
+
+      if (error) throw error;
+
+      if (data) {
         setCustomerData({
-          name: "Juan Pérez Tórrez",
-          score: "A (Excelente)",
+          name: data.nombre_completo,
+          score: data.historial_crediticio,
         });
         setStatus("found");
       } else {
         setCustomerData(null);
         setStatus("not-found");
       }
-    }, SEARCH_DELAY_MS);
+    } catch (err) {
+      console.error(err);
+      setCustomerData(null);
+      setStatus("not-found");
+    }
   };
 
   return (
