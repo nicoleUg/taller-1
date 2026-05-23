@@ -47,4 +47,23 @@ describe('CapacityCalculator - Business Logic', () => {
     expect(screen.getByText('34.4% Endeudamiento')).toBeInTheDocument();
   });
 
+  /**
+   * HU-01: Cálculo de Capacidad de Pago
+   * Criterio de Aceptación:
+   * - Si el porcentaje de endeudamiento supera el 40%, el estado debe ser "Alto Riesgo - Rechazado Automáticamente" (Peligro).
+   */
+  it('Debe mostrar estado de Peligro (>40%)', () => {
+    render(<CapacityCalculator />);
+
+    const inputs = screen.getAllByRole('spinbutton');
+    const totalGanadoInput = inputs[0];
+    const cuotaInput = inputs[1];
+
+    fireEvent.change(totalGanadoInput, { target: { value: '10000' } });
+
+    fireEvent.change(cuotaInput, { target: { value: '4000' } });
+
+    expect(screen.getByText('Alto Riesgo - Rechazado Automáticamente')).toBeInTheDocument();
+    expect(screen.getByText('45.8% Endeudamiento')).toBeInTheDocument();
+  });
 });
