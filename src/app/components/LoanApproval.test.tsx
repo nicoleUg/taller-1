@@ -12,15 +12,13 @@ describe('LoanApproval - Business Logic', () => {
    */
   it('Debe mantener el botón deshabilitado si el monto es vacío o cero', () => {
     render(<LoanApproval />);
-    
-    // Inicialmente está deshabilitado
+
     const actionButton = screen.getByRole('button');
     expect(actionButton).toBeDisabled();
 
-    // Ingresar monto 0
     const amountInput = screen.getByPlaceholderText('0.00');
     fireEvent.change(amountInput, { target: { value: '0' } });
-    
+
     expect(actionButton).toBeDisabled();
   });
 
@@ -32,16 +30,14 @@ describe('LoanApproval - Business Logic', () => {
    */
   it('Debe mostrar la opción de "Aprobar Crédito" para montos <= 20000', () => {
     render(<LoanApproval />);
-    
+
     const amountInput = screen.getByPlaceholderText('0.00');
-    // Ingresar 15000
     fireEvent.change(amountInput, { target: { value: '15000' } });
-    
+
     const actionButton = screen.getByRole('button');
     expect(actionButton).not.toBeDisabled();
     expect(screen.getByText('Aprobar Crédito')).toBeInTheDocument();
-    
-    // Validar que NO aparezca el mensaje de comité
+
     expect(screen.queryByText(/Monto excede el límite de autonomía/i)).not.toBeInTheDocument();
   });
 
@@ -53,16 +49,14 @@ describe('LoanApproval - Business Logic', () => {
    */
   it('Debe mostrar "Derivar a Comité" y alerta para montos > 20000', () => {
     render(<LoanApproval />);
-    
+
     const amountInput = screen.getByPlaceholderText('0.00');
-    // Ingresar 25000
     fireEvent.change(amountInput, { target: { value: '25000' } });
-    
+
     const actionButton = screen.getByRole('button');
     expect(actionButton).not.toBeDisabled();
     expect(screen.getByText('Derivar a Comité')).toBeInTheDocument();
-    
-    // Validar que APAREZCA el mensaje de comité
+
     expect(screen.getByText(/Monto excede el límite de autonomía/i)).toBeInTheDocument();
   });
 });
