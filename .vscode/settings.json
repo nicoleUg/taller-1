@@ -1,3 +1,7 @@
 {
-    "liveServer.settings.port": 5502
+    "liveServer.settings.port": 5502,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "nicoleug",
+        "projectKey": "nicoleUg_taller-1"
+    }
 }
