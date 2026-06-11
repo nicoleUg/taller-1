@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Calculator, DollarSign, TrendingUp } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { motion } from "motion/react";
 import { clsx } from "clsx";
 
