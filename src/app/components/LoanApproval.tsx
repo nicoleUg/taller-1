@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Check, ShieldCheck, DollarSign, Send, FileCheck } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { motion, AnimatePresence } from "motion/react";
 import { clsx } from "clsx";
 
