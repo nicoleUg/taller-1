@@ -175,7 +175,7 @@ export function calcularSeguroDesgravamen(monto: number): number {
 
 **HU:** [HU-12] Validación estricta de Cédula de Identidad (C.I.)
 
-> Como sistema requiero validar que el C.I. ingresado tenga un formato válido boliviano para evitar registrar clientes con datos basura o incompletos en la base de datos.
+> Como sistema requiero validar que el C.I. ingresado tenga un formato válido  para evitar registrar clientes con datos basura o incompletos en la base de datos.
 
 **CA elegido:** Dado un string de entrada, la función debe retornar verdadero si contiene entre 6 y 8 dígitos numéricos, permitiendo opcionalmente un guion seguido de un complemento alfanumérico (ej. "1234567", "9876543-1A").
 
