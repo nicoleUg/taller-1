@@ -33,7 +33,7 @@
 
 **CA elegido:** [texto del criterio de aceptación]
 
-**Commit 1 — Rojo** [`a1b2c3d`](https://github.com/usuario/repo/commit/a1b2c3d):
+**Commit 1 — Rojo** [`2deb474`](https://github.com/nicoleUg/taller-1/commit/2deb474315025eb4bd9b53f8ff33d3c949ffd319):
 
 test: [HU-08] agregar test para determinacion de tasa de interes
 
@@ -60,16 +60,20 @@ describe('getInterestRateByRisk', () => {
 
 **Commit 2 — Verde** [`b2c3d4e`](https://github.com/usuario/repo/commit/b2c3d4e):
 ```
-feat: [HU-XX] implementar [método] para pasar test
+feat: [HU-08] implementar getInterestRateByRisk para pasar test
 ```
 Código mínimo para hacer pasar el test:
-```csharp / typescript
-// snippet del código implementado
+```  typescript
+export function getInterestRateByRisk(risk: string): number {
+  if (risk === 'safe') return 12;
+  if (risk === 'warning') return 15;
+  return 20;
+}
 ```
 
 > Captura del test pasando:
 
-![Test verde](capturas/[proyecto]-tdd1-verde.png)
+![Test verde](capturas/prestamos-tdd1-verde.png)
 
 ---
 
