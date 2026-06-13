@@ -110,7 +110,7 @@ export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
 
 **CA elegido:** Dado un monto solicitado mayor a cero, el sistema debe calcular exactamente el 0.15% correspondiente al costo del seguro de vida.
 
-**Commit 1 — Rojo** [`2deb474`](https://github.com/nicoleUg/taller-1/commit/2deb474315025eb4bd9b53f8ff33d3c949ffd319):
+**Commit 1 — Rojo** [`cce5283`](https://github.com/nicoleUg/taller-1/commit/cce52839717b88a4fdbc5ff9a8dbc263e61b483a):
 
 test: [HU-09] agregar test para calculo de seguro de desgravamen
 
@@ -134,20 +134,18 @@ describe('calcularSeguroDesgravamen', () => {
 
 **Commit 2 — Verde** [`91d15c5`](https://github.com/nicoleUg/taller-1/commit/91d15c59f82cc9926c475559327dce92468d1ac4):
 ```
-feat: [HU-08] implementar getInterestRateByRisk para pasar test
+feat: [HU-09] implementar calcularSeguroDesgravamen
 ```
 Código mínimo para hacer pasar el test:
 ```  typescript
-export function getInterestRateByRisk(risk: string): number {
-  if (risk === 'safe') return 12;
-  if (risk === 'warning') return 15;
-  return 20;
+export function calcularSeguroDesgravamen(monto: number): number {
+    return monto * 0.0015;
 }
 ```
 
 > Captura del test pasando:
 
-![Test verde](capturas/prestamos-tdd1-verde.png)
+![Test verde](capturas/prestamos-tdd2-verde.png)
 
 ---
 

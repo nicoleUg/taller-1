@@ -9,3 +9,7 @@ const TARIFAS_POR_RIESGO: Record<nivelRiesgo, number> = {
 export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
   return TARIFAS_POR_RIESGO[riesgo] || 20;
 }
+
+export function calcularSeguroDesgravamen(monto: number): number {
+    return monto * 0.0015;
+}
