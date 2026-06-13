@@ -1,4 +1,4 @@
-# EF — Reporte de Proyecto
+# EF — Reporte de Proyecto 
 **Estudiante:** Ugarte Nicole
 **Proyecto:** Sistema de Prestamos
 **Repositorio:** https://github.com/nicoleUg/taller-1.git
@@ -372,37 +372,81 @@ describe('calcularSeguroDesgravamen', () => {
 
 | # | Historia de Usuario | Criterio de Aceptación | Prueba que valida ese CA | Commit |
 |---|---|---|---|---|
-| 1 | [HU título] | [Dado/Cuando/Entonces] | [NombrePrueba_Escenario_Resultado] | [`a1b2c3d`](https://github.com/usuario/repo/commit/a1b2c3d) |
-| 2 | [HU título] | [Dado/Cuando/Entonces] | [NombrePrueba_Escenario_Resultado] | [`b2c3d4e`](https://github.com/usuario/repo/commit/b2c3d4e) |
-| 3 | [HU título] | [Dado/Cuando/Entonces] | [NombrePrueba_Escenario_Resultado] | [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f) |
+| 1 | [HU-08] Determinación de Tasa según Riesgo | Dado el estado de riesgo / Cuando es advertencia / Entonces asigna 15% | getRiesgoTasaInteres_NivelRiesgoAdvertencia_Retorna15 | [`9b1c4a7`](https://github.com/nicoleUg/taller-1/commit/9b1c4a7410fb0c3f542de38ea434ab9a0ccbf54c) |
+| 2 | [HU-09] Cálculo de Seguro de Desgravamen | Dado el monto aprobado / Cuando calcula el seguro / Entonces retorna 0.15% |calcularSeguroDesgravamen_MontoPositivo_Calcula015 | [`1885974`](https://github.com/nicoleUg/taller-1/commit/188597431713b4a6c7632692e447c639238edf7c) |
+| 3 | [HU-12] Validación estricta de C.I. | [Dado un C.I. / Cuando tiene formato incorrecto / Entonces retorna falso] |EsCIValido_FormatoIncorrecto_RetornaFalse| [`08a1fc7`](https://github.com/nicoleUg/taller-1/commit/08a1fc733689ebbaa87c00ab100f85acf59c0bd9) |
 
-### Cadena 1 — [Nombre HU]
+### Cadena 1 — [HU-08] Determinación de Tasa según Riesgo
 
 **Historia de Usuario:**
-> Como [rol] quiero [acción] para [beneficio]
+> Como analista de créditos quiero que el sistema asigne automáticamente una Tasa Efectiva Anual basada en el estado de riesgo del cliente para asegurar rentabilidad.
 
 **Criterio de Aceptación elegido:**
-> Dado [contexto] / Cuando [acción] / Entonces [resultado esperado]
+> Dado un estado de riesgo previamente calculado como "advertencia" / Cuando el sistema consulta la tasa base aplicable / Entonces retorna un 15(%).
 
 **Prueba que valida este CA:**
-```csharp / typescript
-[Fact / test]
-public void Metodo_Escenario_ResultadoEsperado()
-{
+``` typescript
+it('debe retornar la tasa de interes correcta segun el nivel de riesgo', () => {
     // Arrange — setup del contexto del CA
+    const riesgoAsignado = 'advertencia';
+    const TASA_ADVERTENCIA = 15;
+    
     // Act — ejecutar la acción del CA
+    const tasaCalculada = getRiesgoTasaInteres(riesgoAsignado);
+    
     // Assert — verificar el resultado del CA
-}
+    expect(tasaCalculada).toBe(TASA_ADVERTENCIA);
+});
 ```
 
 ---
 
-### Cadena 2 — [Nombre HU]
+### Cadena 2 — [HU-09] Cálculo de Seguro de Desgravamen
 
-> Mismo formato.
+**Historia de Usuario:**
+> Como analista de créditos quiero que el sistema calcule el monto del seguro de desgravamen asociado al desembolso para adjuntarlo a la cuota mensual
+
+**Criterio de Aceptación elegido:**
+> Dado un monto de crédito solicitado de $10,000 / Cuando el módulo financiero procesa los costos anexos / Entonces calcula un cargo exacto de $15 (0.15%).
+
+**Prueba que valida este CA:**
+``` typescript
+it('debe calcular el 0.15% del monto total para el seguro', () => {
+    // Arrange — setup del contexto del CA
+    const MONTO_PRUEBA = 10000;
+    const SEGURO_ESPERADO = 15;
+    
+    // Act — ejecutar la acción del CA
+    const seguroCalculado = calcularSeguroDesgravamen(MONTO_PRUEBA);
+    
+    // Assert — verificar el resultado del CA
+    expect(seguroCalculado).toBe(SEGURO_ESPERADO);
+});
+```
 
 ---
 
-### Cadena 3 — [Nombre HU]
+### Cadena 3 — [HU-12] Validación estricta de Cédula de Identidad (C.I.)
 
-> Mismo formato.
+**Historia de Usuario:**
+> Como analista de créditos requiero que el sistema valide que el C.I. ingresado tenga un formato válido  para evitar registrar clientes con datos basura o incompletos en la base de datos.
+
+**Criterio de Aceptación elegido:**
+> Dado un campo de registro de cliente / Cuando el operador ingresa un número de carnet demasiado corto ("12345") o con letras inapropiadas ("ABC1234") / Entonces la función de validación retorna falso.
+
+**Prueba que valida este CA:**
+``` typescript
+it('debe rechazar carnets con letras al inicio o longitudes incorrectas', () => {
+    // Arrange — setup del contexto del CA
+    const carnetConLetras = "ABC1234";
+    const carnetMuyCorto = "12345";
+
+    // Act — ejecutar la acción del CA
+    const esValidoLetras = EsCIValido(carnetConLetras);
+    const esValidoCorto = EsCIValido(carnetMuyCorto);
+
+    // Assert — verificar el resultado del CA
+    expect(esValidoLetras).toBe(false);
+    expect(esValidoCorto).toBe(false);
+});
+```
