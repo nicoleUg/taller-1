@@ -131,8 +131,7 @@ describe('calcularSeguroDesgravamen', () => {
 ![Test rojo](capturas/prestamos-tdd2-rojo.png)
 
 ---
-
-**Commit 2 — Verde** [`bd638db`](https://github.com/nicoleUg/taller-1/commit/bd638dba86ec5898a5614c3e7b3efccca3dcd9f4):
+**Commit 2 — Verde** [`23431c1`](https://github.com/nicoleUg/taller-1/commit/23431c1931baa0ebdc376c0a3fd163c588d08ce7):         
 ```
 feat: [HU-09] implementar calcularSeguroDesgravamen
 ```
@@ -206,7 +205,7 @@ describe('EsCIValido', () => {
 
 ---
 
-**Commit 2 — Verde** [`bd638db`](https://github.com/nicoleUg/taller-1/commit/bd638dba86ec5898a5614c3e7b3efccca3dcd9f4):
+**Commit 2 — Verde** [`23431c1`](https://github.com/nicoleUg/taller-1/commit/23431c1931baa0ebdc376c0a3fd163c588d08ce7):
 ```
 feat: [HU-12] implementar EsCIValido para pasar test
 ```
@@ -228,23 +227,20 @@ export function EsCIValido(ci: string): boolean {
 
 **Commit 3 — Refactor** [`1885974`](https://github.com/nicoleUg/taller-1/commit/188597431713b4a6c7632692e447c639238edf7c):
 ```
-refactor: [HU-09] limpiar y extraer porcentaje del seguro volviendolo constante y proteger contra negativos  
- 
+refactor: [HU-12] limpiar e implementar expresion regular para validacion de CI
 ```
 Cambios aplicados:
 ```typescript
-const seguroDesgravamen = 0.0015;
-
-export function calcularSeguroDesgravamen(monto: number): number {
-  if (monto <= 0) return 0;
-  return monto * seguroDesgravamen;
+export function EsCIValido(ci: string): boolean {
+  if (!ci) return false;
+  const ciRegex = /^\d{6,8}(-[A-Za-z0-9]{1,2})?$/;
+  return ciRegex.test(ci.trim());
 }
-
 ```
 
 > Captura del test aún pasando después del refactor:
 
-![Test post-refactor](capturas/prestamos-tdd2-refactor.png)
+![Test post-refactor](capturas/prestamos-tdd3-refactor.png)
 
 ---
 
