@@ -28,10 +28,11 @@
 
 ### Ciclo TDD — Prueba 1
 
-**HU:** [HU-XX] [título]
-> Como [rol] quiero [acción] para [beneficio]
+**HU:** [HU-08] agregar test para determinacion de tasa de interes
 
-**CA elegido:** [texto del criterio de aceptación]
+> Como analista de créditos quiero que el sistema asigne automáticamente una Tasa Efectiva Anual (TEA) basada en el estado de riesgo del cliente para asegurar rentabilidad.
+
+**CA elegido:** Dado un estado de riesgo, si es 'salvo' retorna 12%, si es 'advertencia' retorna 15%, y si es 'peligro' retorna 20%.
 
 **Commit 1 — Rojo** [`2deb474`](https://github.com/nicoleUg/taller-1/commit/2deb474315025eb4bd9b53f8ff33d3c949ffd319):
 
@@ -103,34 +104,31 @@ export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
 ---
 
 ### Ciclo TDD — Prueba 2
-**HU:** [HU-08] agregar test para determinacion de tasa de interes
+**HU:** [HU-09] Cálculo de Seguro de Desgravamen
 
-> Como analista de créditos quiero que el sistema asigne automáticamente una Tasa Efectiva Anual (TEA) basada en el estado de riesgo del cliente para asegurar rentabilidad.
+> Como sistema requiero calcular el monto del seguro de desgravamen asociado al desembolso para adjuntarlo a la cuota mensual.
 
-**CA elegido:** Dado un estado de riesgo, si es 'salvo' retorna 12%, si es 'advertencia' retorna 15%, y si es 'peligro' retorna 20%.
+**CA elegido:** Dado un monto solicitado mayor a cero, el sistema debe calcular exactamente el 0.15% correspondiente al costo del seguro de vida.
 
 **Commit 1 — Rojo** [`2deb474`](https://github.com/nicoleUg/taller-1/commit/2deb474315025eb4bd9b53f8ff33d3c949ffd319):
 
-test: [HU-08] agregar test para determinacion de tasa de interes
+test: [HU-09] agregar test para calculo de seguro de desgravamen
 
 Test escrito (sin el código que lo pase aún):
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { getInterestRateByRisk } from '../app/lib/creditUtils';
+import { calcularSeguroDesgravamen } from '../../lib/creditUtils';
 
-describe('getInterestRateByRisk', () => {
-  it('debe retornar la tasa de interes correcta segun el nivel de riesgo', () => {
-    expect(getInterestRateByRisk('safe')).toBe(12);
-    expect(getInterestRateByRisk('warning')).toBe(15);
-    expect(getInterestRateByRisk('danger')).toBe(20);
+describe('calcularSeguroDesgravamen', () => {
+  it('debe calcular el 0.15% del monto total para el seguro', () => {
+    expect(calcularSeguroDesgravamen(10000)).toBe(15);
   });
 });
 ```
 
 > Captura del test fallando:
 
-![Test rojo](capturas/prestamos-tdd1-rojo.png)
+![Test rojo](capturas/prestamos-tdd2-rojo.png)
 
 ---
 
