@@ -58,7 +58,7 @@ describe('getInterestRateByRisk', () => {
 
 ---
 
-**Commit 2 — Verde** [`b2c3d4e`](https://github.com/usuario/repo/commit/b2c3d4e):
+**Commit 2 — Verde** [`91d15c5`](https://github.com/nicoleUg/taller-1/commit/91d15c59f82cc9926c475559327dce92468d1ac4):
 ```
 feat: [HU-08] implementar getInterestRateByRisk para pasar test
 ```
@@ -79,16 +79,26 @@ export function getInterestRateByRisk(risk: string): number {
 
 **Commit 3 — Refactor** [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f):
 ```
-refactor: [HU-XX] limpiar [aspecto mejorado]
+refactor: [HU-08] limpiar if/else anidados utilizando diccionario de tasas  
 ```
 Cambios aplicados:
-```csharp / typescript
-// snippet mejorado
+```typescript
+export type nivelRiesgo = 'salvo' | 'advertencia' | 'peligro';
+
+const TARIFAS_POR_RIESGO: Record<nivelRiesgo, number> = {
+  salvo: 12,
+  advertencia: 15,
+  peligro: 20
+};
+
+export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
+  return TARIFAS_POR_RIESGO[riesgo] || 20;
+}
 ```
 
 > Captura del test aún pasando después del refactor:
 
-![Test post-refactor](capturas/[proyecto]-tdd1-refactor.png)
+![Test post-refactor](capturas/prestamos-tdd1-refactor.png)
 
 ---
 

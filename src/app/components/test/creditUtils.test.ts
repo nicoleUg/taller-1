@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { getInterestRateByRisk } from '../../lib/creditUtils';
+import { getRiesgoTasaInteres } from '../../lib/creditUtils';
 
-describe('getInterestRateByRisk', () => {
+describe('getRiesgoTasaInteres', () => {
   it('debe retornar la tasa de interes correcta segun el nivel de riesgo', () => {
-    expect(getInterestRateByRisk('safe')).toBe(12);
-    expect(getInterestRateByRisk('warning')).toBe(15);
-    expect(getInterestRateByRisk('danger')).toBe(20);
+    expect(getRiesgoTasaInteres('salvo')).toBe(12);
+    expect(getRiesgoTasaInteres('advertencia')).toBe(15);
+    expect(getRiesgoTasaInteres('peligro')).toBe(20);
   });
 });
