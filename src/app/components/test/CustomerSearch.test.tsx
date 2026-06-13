@@ -45,17 +45,15 @@ describe('CustomerSearch - Business Logic', () => {
    * Criterio de Aceptación:
    * - Al encontrar un cliente en el sistema, mostrar el panel de "Cliente Encontrado" con su nombre y score.
    */
-  it('Debe mostrar "Cliente Encontrado" cuando la búsqueda es exitosa', async () => {
-    // Mock successful Supabase response
+ it('Debe mostrar "Cliente Encontrado" cuando la búsqueda es exitosa', async () => {
     const mockQuery = {
       select: vi.fn().mockReturnThis(),
       eq: vi.fn().mockReturnThis(),
-      maybeSingle: vi.fn().mockResolvedValue({
+      maybeSingle: vi.fn().mockResolvedValue({ 
         data: { nombre_completo: 'Juan Pérez Tórrez', historial_crediticio: 'A (Excelente)' },
-        error: null
-      })
+        error: null })
     };
-    (supabase.from as any).mockReturnValue(mockQuery);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockQuery);
 
     render(<CustomerSearch />);
 

@@ -265,11 +265,11 @@ Mínimo 3 nuevos (adicionales a los del EC2).
 
 | # | Tipo | Commit | Descripción |
 |---|---|---|---|
-| 1 | Dead Code (Imports sin usar) | [`a1b2c3d`](https://github.com/usuario/repo/commit/a1b2c3d) | [Antes: Importación de ArrowRight no utilizada en App.tsx. → Después: Eliminación del import para limpiar el código y resolver el error de ESLint.] |
-| 2 | Inseguridad de Tipos (Uso de any) | [`b2c3d4e`](https://github.com/usuario/repo/commit/b2c3d4e) | [Antes: X → Después: Y] |
+| 1 | Dead Code (Imports sin usar) | [`d558177`](https://github.com/nicoleUg/taller-1/commit/d558177c05b2404965b077e0ce192f7f69fda303) | Antes: Importación de ArrowRight no utilizada en App.tsx. → Después: Eliminación del import para limpiar el código y resolver el error de ESLint.|
+| 2 | Inseguridad de Tipos (Uso de any) | [`b2c3d4e`](https://github.com/usuario/repo/commit/b2c3d4e) | Antes: Casteo de Supabase con any en CustomerSearch.test.tsx → Después: Uso de tipado correcto de Vitest (ReturnType<typeof vi.fn>) para el mock. |
 | 3 | Magic Numbers | [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f) | [Antes: X → Después: Y] |
 
-### Detalle — Smell 1: [Tipo]
+### Detalle — Smell 1: Dead code
 
 **Código antes:**
 ``` typescript
@@ -281,7 +281,7 @@ import { ArrowRight } from 'lucide-react';
 ```
 
 **Código después:**
-```csharp / typescript
+```typescript
 import { Header } from './components/Header';
 import { CustomerSearch } from './components/CustomerSearch';
 import { CapacityCalculator } from './components/CapacityCalculator';
@@ -290,15 +290,57 @@ import { LoanApproval } from './components/LoanApproval';
 
 ---
 
-### Detalle — Smell 2: [Tipo]
+### Detalle — Smell 2: Inseguridad de tipos
 
-> Mismo formato.
+
+**Código antes:**
+``` typescript
+  it('Debe mostrar "Cliente Encontrado" cuando la búsqueda es exitosa', async () => {
+    const mockQuery = {
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      maybeSingle: vi.fn().mockResolvedValue({
+        data: { nombre_completo: 'Juan Pérez Tórrez', historial_crediticio: 'A (Excelente)' },
+        error: null
+      })
+    };
+    (supabase.from as any).mockReturnValue(mockQuery);
+```
+
+**Código después:**
+```typescript
+    it('Debe mostrar "Cliente Encontrado" cuando la búsqueda es exitosa', async () => {
+    const mockQuery = {
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      maybeSingle: vi.fn().mockResolvedValue({ 
+        data: { nombre_completo: 'Juan Pérez Tórrez', historial_crediticio: 'A (Excelente)' },
+        error: null })
+    };
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockQuery);
+```
 
 ---
 
-### Detalle — Smell 3: [Tipo]
+### Detalle — Smell 3: Magic Numbers
 
-> Mismo formato.
+
+**Código antes:**
+``` typescript
+import { Header } from './components/Header';
+import { CustomerSearch } from './components/CustomerSearch';
+import { CapacityCalculator } from './components/CapacityCalculator';
+import { LoanApproval } from './components/LoanApproval';
+import { ArrowRight } from 'lucide-react';
+```
+
+**Código después:**
+```typescript
+import { Header } from './components/Header';
+import { CustomerSearch } from './components/CustomerSearch';
+import { CapacityCalculator } from './components/CapacityCalculator';
+import { LoanApproval } from './components/LoanApproval';
+```
 
 ---
 
