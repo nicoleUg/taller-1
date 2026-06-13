@@ -77,7 +77,7 @@ export function getInterestRateByRisk(risk: string): number {
 
 ---
 
-**Commit 3 — Refactor** [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f):
+**Commit 3 — Refactor** [`9b1c4a7`](https://github.com/nicoleUg/taller-1/commit/9b1c4a7410fb0c3f542de38ea434ab9a0ccbf54c):
 ```
 refactor: [HU-08] limpiar if/else anidados utilizando diccionario de tasas  
 ```
@@ -103,8 +103,79 @@ export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
 ---
 
 ### Ciclo TDD — Prueba 2
+**HU:** [HU-08] agregar test para determinacion de tasa de interes
 
-> Mismo formato. Incluir al menos 3 ciclos TDD completos.
+> Como analista de créditos quiero que el sistema asigne automáticamente una Tasa Efectiva Anual (TEA) basada en el estado de riesgo del cliente para asegurar rentabilidad.
+
+**CA elegido:** Dado un estado de riesgo, si es 'salvo' retorna 12%, si es 'advertencia' retorna 15%, y si es 'peligro' retorna 20%.
+
+**Commit 1 — Rojo** [`2deb474`](https://github.com/nicoleUg/taller-1/commit/2deb474315025eb4bd9b53f8ff33d3c949ffd319):
+
+test: [HU-08] agregar test para determinacion de tasa de interes
+
+Test escrito (sin el código que lo pase aún):
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import { getInterestRateByRisk } from '../app/lib/creditUtils';
+
+describe('getInterestRateByRisk', () => {
+  it('debe retornar la tasa de interes correcta segun el nivel de riesgo', () => {
+    expect(getInterestRateByRisk('safe')).toBe(12);
+    expect(getInterestRateByRisk('warning')).toBe(15);
+    expect(getInterestRateByRisk('danger')).toBe(20);
+  });
+});
+```
+
+> Captura del test fallando:
+
+![Test rojo](capturas/prestamos-tdd1-rojo.png)
+
+---
+
+**Commit 2 — Verde** [`91d15c5`](https://github.com/nicoleUg/taller-1/commit/91d15c59f82cc9926c475559327dce92468d1ac4):
+```
+feat: [HU-08] implementar getInterestRateByRisk para pasar test
+```
+Código mínimo para hacer pasar el test:
+```  typescript
+export function getInterestRateByRisk(risk: string): number {
+  if (risk === 'safe') return 12;
+  if (risk === 'warning') return 15;
+  return 20;
+}
+```
+
+> Captura del test pasando:
+
+![Test verde](capturas/prestamos-tdd1-verde.png)
+
+---
+
+**Commit 3 — Refactor** [`9b1c4a7`](https://github.com/nicoleUg/taller-1/commit/9b1c4a7410fb0c3f542de38ea434ab9a0ccbf54c):
+```
+refactor: [HU-08] limpiar if/else anidados utilizando diccionario de tasas  
+```
+Cambios aplicados:
+```typescript
+export type nivelRiesgo = 'salvo' | 'advertencia' | 'peligro';
+
+const TARIFAS_POR_RIESGO: Record<nivelRiesgo, number> = {
+  salvo: 12,
+  advertencia: 15,
+  peligro: 20
+};
+
+export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
+  return TARIFAS_POR_RIESGO[riesgo] || 20;
+}
+```
+
+> Captura del test aún pasando después del refactor:
+
+![Test post-refactor](capturas/prestamos-tdd1-refactor.png)
+
 
 ---
 
