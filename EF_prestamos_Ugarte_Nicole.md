@@ -149,7 +149,7 @@ export function calcularSeguroDesgravamen(monto: number): number {
 
 ---
 
-**Commit 3 — Refactor** [`9b1c4a7`](https://github.com/nicoleUg/taller-1/commit/9b1c4a7410fb0c3f542de38ea434ab9a0ccbf54c):
+**Commit 3 — Refactor** [`1885974`](https://github.com/nicoleUg/taller-1/commit/188597431713b4a6c7632692e447c639238edf7c):
 ```
 refactor: [HU-09] limpiar y extraer porcentaje del seguro volviendolo constante y proteger contra negativos  
  
@@ -174,7 +174,74 @@ export function calcularSeguroDesgravamen(monto: number): number {
 
 ### Ciclo TDD — Prueba 3
 
-> Mismo formato.
+**HU:** [HU-12] Validación estricta de Cédula de Identidad (C.I.)
+
+> Como sistema requiero validar que el C.I. ingresado tenga un formato válido boliviano para evitar registrar clientes con datos basura o incompletos en la base de datos.
+
+**CA elegido:** Dado un string de entrada, la función debe retornar verdadero si contiene entre 6 y 8 dígitos numéricos, permitiendo opcionalmente un guion seguido de un complemento alfanumérico (ej. "1234567", "9876543-1A").
+
+**Commit 1 — Rojo** [`cce5283`](https://github.com/nicoleUg/taller-1/commit/cce52839717b88a4fdbc5ff9a8dbc263e61b483a):
+
+test: [HU-12] agregar test para validacion de formato de carnet de identidad
+
+Test escrito (sin el código que lo pase aún):
+
+```typescript
+describe('EsCIValido', () => {
+  it('debe aceptar carnets validos con o sin complemento', () => {
+    expect(EsCIValido("1234567")).toBe(true);
+    expect(EsCIValido("9876543-1A")).toBe(true);
+  });
+
+  it('debe rechazar carnets con letras al inicio o longitudes incorrectas', () => {
+    expect(EsCIValido("ABC1234")).toBe(false); 
+    expect(EsCIValido("12345")).toBe(false);  
+  });
+});
+```
+
+> Captura del test fallando:
+
+![Test rojo](capturas/prestamos-tdd3-rojo.png)
+
+---
+
+**Commit 2 — Verde** [`bd638db`](https://github.com/nicoleUg/taller-1/commit/bd638dba86ec5898a5614c3e7b3efccca3dcd9f4):
+```
+feat: [HU-09] implementar calcularSeguroDesgravamen
+```
+Código mínimo para hacer pasar el test:
+```  typescript
+export function calcularSeguroDesgravamen(monto: number): number {
+    return monto * 0.0015;
+}
+```
+
+> Captura del test pasando:
+
+![Test verde](capturas/prestamos-tdd2-verde.png)
+
+---
+
+**Commit 3 — Refactor** [`1885974`](https://github.com/nicoleUg/taller-1/commit/188597431713b4a6c7632692e447c639238edf7c):
+```
+refactor: [HU-09] limpiar y extraer porcentaje del seguro volviendolo constante y proteger contra negativos  
+ 
+```
+Cambios aplicados:
+```typescript
+const seguroDesgravamen = 0.0015;
+
+export function calcularSeguroDesgravamen(monto: number): number {
+  if (monto <= 0) return 0;
+  return monto * seguroDesgravamen;
+}
+
+```
+
+> Captura del test aún pasando después del refactor:
+
+![Test post-refactor](capturas/prestamos-tdd2-refactor.png)
 
 ---
 
