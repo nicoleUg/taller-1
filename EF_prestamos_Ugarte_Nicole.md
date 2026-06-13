@@ -180,7 +180,7 @@ export function calcularSeguroDesgravamen(monto: number): number {
 
 **CA elegido:** Dado un string de entrada, la función debe retornar verdadero si contiene entre 6 y 8 dígitos numéricos, permitiendo opcionalmente un guion seguido de un complemento alfanumérico (ej. "1234567", "9876543-1A").
 
-**Commit 1 — Rojo** [`cce5283`](https://github.com/nicoleUg/taller-1/commit/cce52839717b88a4fdbc5ff9a8dbc263e61b483a):
+**Commit 1 — Rojo** [`a560b5b`](https://github.com/nicoleUg/taller-1/commit/a560b5bf877913284dc849f50aadaa06c147fb47):
 
 test: [HU-12] agregar test para validacion de formato de carnet de identidad
 
@@ -208,18 +208,21 @@ describe('EsCIValido', () => {
 
 **Commit 2 — Verde** [`bd638db`](https://github.com/nicoleUg/taller-1/commit/bd638dba86ec5898a5614c3e7b3efccca3dcd9f4):
 ```
-feat: [HU-09] implementar calcularSeguroDesgravamen
+feat: [HU-12] implementar EsCIValido para pasar test
 ```
 Código mínimo para hacer pasar el test:
 ```  typescript
-export function calcularSeguroDesgravamen(monto: number): number {
-    return monto * 0.0015;
+export function EsCIValido(ci: string): boolean {
+  if (ci === "1234567" || ci === "9876543-1A") {
+    return true;
+  }
+  return false;
 }
 ```
 
 > Captura del test pasando:
 
-![Test verde](capturas/prestamos-tdd2-verde.png)
+![Test verde](capturas/prestamos-tdd3-verde.png)
 
 ---
 

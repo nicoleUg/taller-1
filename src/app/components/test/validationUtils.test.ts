@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { EsCIValido } from '../../../lib/validationUtils';
+import { EsCIValido } from '../../lib/validationUtils';
 
 describe('EsCIValido', () => {
   it('debe aceptar carnets validos con o sin complemento', () => {
