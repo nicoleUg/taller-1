@@ -24,8 +24,12 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
-      include: ['src/app/components/**/*.tsx'],
-      exclude: ['src/app/components/ui/**', 'src/app/components/figma/**'],
+      include: ['src/app/components/**/*.tsx', 'src/app/lib/**/*.ts'],
+      exclude: [
+        'src/app/components/ui/**',
+        'src/app/components/figma/**',
+        'src/app/lib/supabase.ts'
+      ],
     },
   },
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { LoanApproval } from './LoanApproval';
+import { LoanApproval } from '../LoanApproval';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom';
 

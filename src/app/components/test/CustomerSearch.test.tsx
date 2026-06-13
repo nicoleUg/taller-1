@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { CustomerSearch } from './CustomerSearch';
+import { CustomerSearch } from '../CustomerSearch';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 
-vi.mock('../lib/supabase', () => ({
+vi.mock('../../lib/supabase', () => ({
   supabase: {
     from: vi.fn(() => ({
       select: vi.fn().mockReturnThis(),
@@ -45,17 +45,15 @@ describe('CustomerSearch - Business Logic', () => {
    * Criterio de Aceptación:
    * - Al encontrar un cliente en el sistema, mostrar el panel de "Cliente Encontrado" con su nombre y score.
    */
-  it('Debe mostrar "Cliente Encontrado" cuando la búsqueda es exitosa', async () => {
-    // Mock successful Supabase response
+ it('Debe mostrar "Cliente Encontrado" cuando la búsqueda es exitosa', async () => {
     const mockQuery = {
       select: vi.fn().mockReturnThis(),
       eq: vi.fn().mockReturnThis(),
-      maybeSingle: vi.fn().mockResolvedValue({
+      maybeSingle: vi.fn().mockResolvedValue({ 
         data: { nombre_completo: 'Juan Pérez Tórrez', historial_crediticio: 'A (Excelente)' },
-        error: null
-      })
+        error: null })
     };
-    (supabase.from as any).mockReturnValue(mockQuery);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockQuery);
 
     render(<CustomerSearch />);
 

@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for LoanApproval.tsx</title>
+    <title>Code coverage report for components/LoanApproval.tsx</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="prettify.css" />
-    <link rel="stylesheet" href="base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> LoanApproval.tsx</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">components</a> LoanApproval.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">78.94% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/12</span>
+                <span class='fraction'>15/19</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">76.47% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/12</span>
+                <span class='fraction'>13/17</span>
             </div>
         
             
@@ -174,13 +174,23 @@
 <a name='L109'></a><a href='#L109'>109</a>
 <a name='L110'></a><a href='#L110'>110</a>
 <a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
@@ -281,17 +291,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from "react";
 import { Check, ShieldCheck, DollarSign, Send, FileCheck } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import { motion, AnimatePresence } from "motion/react";
 import { clsx } from "clsx";
 &nbsp;
 const COMMITTEE_LIMIT = 20000;
+const APPROVAL_DELAY_MS = 3000;
+&nbsp;
+const getButtonClasses = (isDisabled: boolean, isCommittee: boolean) =&gt; {
+  if (isDisabled) return "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none";
+  if (isCommittee) return "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/30 ring-4 ring-blue-500/20";
+  return "bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-500/30 ring-4 ring-emerald-500/20";
+};
 &nbsp;
 export function LoanApproval() {
   const [amount, setAmount] = useState&lt;number | ""&gt;("");
@@ -305,7 +318,7 @@ export function LoanApproval() {
 <span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >      setIsApproved(false);</span>
 <span class="cstat-no" title="statement not covered" >      setAmount("");</span>
-    }, 3000);
+    }, APPROVAL_DELAY_MS);
   };
 &nbsp;
   return (
@@ -364,11 +377,7 @@ export function LoanApproval() {
               disabled={isDisabled}
               className={clsx(
                 "w-full md:w-auto min-w-[280px] px-8 py-5 rounded-xl font-bold text-lg shadow-lg transition-all duration-300 flex items-center justify-center gap-3 relative overflow-hidden group",
-                isDisabled 
-                  ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none" 
-                  : isCommittee 
-                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-500/30 ring-4 ring-blue-500/20" 
-                    : "bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-500/30 ring-4 ring-emerald-500/20"
+                getButtonClasses(isDisabled, isCommittee)
               )}
             &gt;
               &lt;span className="relative z-10 flex items-center gap-3"&gt;
@@ -403,16 +412,16 @@ export function LoanApproval() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-05-23T06:25:18.556Z
+                at 2026-06-13T03:14:41.747Z
             </div>
-        <script src="prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="sorter.js"></script>
-        <script src="block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     

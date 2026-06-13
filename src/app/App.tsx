@@ -1,9 +1,7 @@
-import React from 'react';
 import { Header } from './components/Header';
 import { CustomerSearch } from './components/CustomerSearch';
 import { CapacityCalculator } from './components/CapacityCalculator';
 import { LoanApproval } from './components/LoanApproval';
-import { ArrowRight } from 'lucide-react';
 
 export default function App() {
   return (
