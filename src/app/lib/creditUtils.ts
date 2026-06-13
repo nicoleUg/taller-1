@@ -10,6 +10,9 @@ export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
   return TARIFAS_POR_RIESGO[riesgo] || 20;
 }
 
+const seguroDesgravamen = 0.0015;
+
 export function calcularSeguroDesgravamen(monto: number): number {
-    return monto * 0.0015;
+  if (monto <= 0) return 0;
+  return monto * seguroDesgravamen;
 }

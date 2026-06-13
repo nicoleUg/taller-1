@@ -132,7 +132,7 @@ describe('calcularSeguroDesgravamen', () => {
 
 ---
 
-**Commit 2 — Verde** [`91d15c5`](https://github.com/nicoleUg/taller-1/commit/91d15c59f82cc9926c475559327dce92468d1ac4):
+**Commit 2 — Verde** [`bd638db`](https://github.com/nicoleUg/taller-1/commit/bd638dba86ec5898a5614c3e7b3efccca3dcd9f4):
 ```
 feat: [HU-09] implementar calcularSeguroDesgravamen
 ```
@@ -151,26 +151,23 @@ export function calcularSeguroDesgravamen(monto: number): number {
 
 **Commit 3 — Refactor** [`9b1c4a7`](https://github.com/nicoleUg/taller-1/commit/9b1c4a7410fb0c3f542de38ea434ab9a0ccbf54c):
 ```
-refactor: [HU-08] limpiar if/else anidados utilizando diccionario de tasas  
+refactor: [HU-09] limpiar y extraer porcentaje del seguro volviendolo constante y proteger contra negativos  
+ 
 ```
 Cambios aplicados:
 ```typescript
-export type nivelRiesgo = 'salvo' | 'advertencia' | 'peligro';
+const seguroDesgravamen = 0.0015;
 
-const TARIFAS_POR_RIESGO: Record<nivelRiesgo, number> = {
-  salvo: 12,
-  advertencia: 15,
-  peligro: 20
-};
-
-export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
-  return TARIFAS_POR_RIESGO[riesgo] || 20;
+export function calcularSeguroDesgravamen(monto: number): number {
+  if (monto <= 0) return 0;
+  return monto * seguroDesgravamen;
 }
+
 ```
 
 > Captura del test aún pasando después del refactor:
 
-![Test post-refactor](capturas/prestamos-tdd1-refactor.png)
+![Test post-refactor](capturas/prestamos-tdd2-refactor.png)
 
 
 ---
