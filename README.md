@@ -1,6 +1,5 @@
 
-  # Banco UI Diseño Elegante
-
+  # Banco prestamos
   ## Running the code
 
   Run `npm i` to install the dependencies.
