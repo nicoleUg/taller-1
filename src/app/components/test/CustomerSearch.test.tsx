@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { CustomerSearch } from './CustomerSearch';
+import { CustomerSearch } from '../CustomerSearch';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../../lib/supabase';
 
-vi.mock('../lib/supabase', () => ({
+vi.mock('../../lib/supabase', () => ({
   supabase: {
     from: vi.fn(() => ({
       select: vi.fn().mockReturnThis(),

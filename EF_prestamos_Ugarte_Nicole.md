@@ -22,8 +22,6 @@
 
 **Herramienta:** Vitest / Istanbul, comando: npx vitest run --coverage
 
-> Captura del reporte de cobertura antes de escribir pruebas nuevas:
-
 ![Cobertura inicial](capturas/cobertura_inicial.png)
 
 ---
@@ -36,17 +34,27 @@
 **CA elegido:** [texto del criterio de aceptación]
 
 **Commit 1 — Rojo** [`a1b2c3d`](https://github.com/usuario/repo/commit/a1b2c3d):
-```
-test: [HU-XX] agregar test para [CA]
-```
+
+test: [HU-08] agregar test para determinacion de tasa de interes
+
 Test escrito (sin el código que lo pase aún):
-```csharp / typescript
-// snippet del test
+
+```typescript
+import { describe, it, expect } from 'vitest';
+import { getInterestRateByRisk } from '../app/lib/creditUtils';
+
+describe('getInterestRateByRisk', () => {
+  it('debe retornar la tasa de interes correcta segun el nivel de riesgo', () => {
+    expect(getInterestRateByRisk('safe')).toBe(12);
+    expect(getInterestRateByRisk('warning')).toBe(15);
+    expect(getInterestRateByRisk('danger')).toBe(20);
+  });
+});
 ```
 
-> Captura del test fallando o error de compilación:
+> Captura del test fallando:
 
-![Test rojo](capturas/[proyecto]-tdd1-rojo.png)
+![Test rojo](capturas/prestamos-tdd1-rojo.png)
 
 ---
 

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { CapacityCalculator } from './CapacityCalculator';
+import { CapacityCalculator } from '../CapacityCalculator';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom';
 
