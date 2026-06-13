@@ -11,8 +11,8 @@
 **Swagger / API:** no aplica
 
 > Captura del proyecto corriendo con datos reales:
-![deploy en produccion](capturas/prestamos-deploy.png)
-![deploy en produccion](capturas/prestamos-deploy2.png)
+![deploy en produccion](./prestamos_capturas/prestamos-deploy.png)
+![deploy en produccion](./prestamos_capturas/prestamos-deploy2.png)
 
 ---
 
@@ -22,7 +22,7 @@
 
 **Herramienta:** Vitest / Istanbul, comando: npx vitest run --coverage
 
-![Cobertura inicial](capturas/cobertura_inicial.png)
+![Cobertura inicial](./prestamos_capturas/cobertura_inicial.png)
 
 ---
 
@@ -55,7 +55,7 @@ describe('getInterestRateByRisk', () => {
 
 > Captura del test fallando:
 
-![Test rojo](capturas/prestamos-tdd1-rojo.png)
+![Test rojo](./prestamos_capturas/prestamos-tdd1-rojo.png)
 
 ---
 
@@ -74,7 +74,7 @@ export function getInterestRateByRisk(risk: string): number {
 
 > Captura del test pasando:
 
-![Test verde](capturas/prestamos-tdd1-verde.png)
+![Test verde](./prestamos_capturas/prestamos-tdd1-verde.png)
 
 ---
 
@@ -99,7 +99,7 @@ export function getRiesgoTasaInteres(riesgo: nivelRiesgo): number {
 
 > Captura del test aún pasando después del refactor:
 
-![Test post-refactor](capturas/prestamos-tdd1-refactor.png)
+![Test post-refactor](./prestamos_capturas/prestamos-tdd1-refactor.png)
 
 ---
 
@@ -128,7 +128,7 @@ describe('calcularSeguroDesgravamen', () => {
 
 > Captura del test fallando:
 
-![Test rojo](capturas/prestamos-tdd2-rojo.png)
+![Test rojo](./prestamos_capturas/prestamos-tdd2-rojo.png)
 
 ---
 **Commit 2 — Verde** [`23431c1`](https://github.com/nicoleUg/taller-1/commit/23431c1931baa0ebdc376c0a3fd163c588d08ce7):         
@@ -144,7 +144,7 @@ export function calcularSeguroDesgravamen(monto: number): number {
 
 > Captura del test pasando:
 
-![Test verde](capturas/prestamos-tdd2-verde.png)
+![Test verde](./prestamos_capturas/prestamos-tdd2-verde.png)
 
 ---
 
@@ -166,7 +166,7 @@ export function calcularSeguroDesgravamen(monto: number): number {
 
 > Captura del test aún pasando después del refactor:
 
-![Test post-refactor](capturas/prestamos-tdd2-refactor.png)
+![Test post-refactor](./prestamos_capturas/prestamos-tdd2-refactor.png)
 
 
 ---
@@ -201,7 +201,7 @@ describe('EsCIValido', () => {
 
 > Captura del test fallando:
 
-![Test rojo](capturas/prestamos-tdd3-rojo.png)
+![Test rojo](./prestamos_capturas/prestamos-tdd3-rojo.png)
 
 ---
 
@@ -221,7 +221,7 @@ export function EsCIValido(ci: string): boolean {
 
 > Captura del test pasando:
 
-![Test verde](capturas/prestamos-tdd3-verde.png)
+![Test verde](./prestamos_capturas/prestamos-tdd3-verde.png)
 
 ---
 
@@ -240,7 +240,7 @@ export function EsCIValido(ci: string): boolean {
 
 > Captura del test aún pasando después del refactor:
 
-![Test post-refactor](capturas/prestamos-tdd3-refactor.png)
+![Test post-refactor](./prestamos_capturas/prestamos-tdd3-refactor.png)
 
 ---
 
@@ -250,8 +250,8 @@ export function EsCIValido(ci: string): boolean {
 
 > Captura del reporte de cobertura final:
 
-![Cobertura final](capturas/prestamos-cobertura-final.png)
-![Cobertura final](capturas/prestamos-cobertura-final1.png)
+![Cobertura final](./prestamos_capturas/prestamos-cobertura-final.png)
+![Cobertura final](./prestamos_capturas/prestamos-cobertura-final1.png)
 
 > La cobertura del codigo bajo a un 87.73% ya que anteriormente hicimos pruebas de integracion y estas serian como tal pruebas unitarias de negocio que anteriormente no estaban cubiertas
 
@@ -259,7 +259,7 @@ export function EsCIValido(ci: string): boolean {
 
 ## Sección 3 — Code smells corregidos
 
-![reporte Codesmells](capturas/prestamos-code-smells.png) 
+![reporte Codesmells](./prestamos_capturas/prestamos-code-smells.png) 
 
 Mínimo 3 nuevos (adicionales a los del EC2).
 
@@ -365,7 +365,7 @@ describe('calcularSeguroDesgravamen', () => {
   });
 });
 ```
-![reporte Codesmells](capturas/prestamos-code-smells2.png)
+![reporte Codesmells](./prestamos_capturas/prestamos-code-smells2.png)
 ---
 
 ## Sección 4 — Trazabilidad HU → CA → test
