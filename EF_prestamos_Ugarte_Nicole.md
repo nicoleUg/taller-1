@@ -266,8 +266,8 @@ Mínimo 3 nuevos (adicionales a los del EC2).
 | # | Tipo | Commit | Descripción |
 |---|---|---|---|
 | 1 | Dead Code (Imports sin usar) | [`d558177`](https://github.com/nicoleUg/taller-1/commit/d558177c05b2404965b077e0ce192f7f69fda303) | Antes: Importación de ArrowRight no utilizada en App.tsx. → Después: Eliminación del import para limpiar el código y resolver el error de ESLint.|
-| 2 | Inseguridad de Tipos (Uso de any) | [`b2c3d4e`](https://github.com/usuario/repo/commit/b2c3d4e) | Antes: Casteo de Supabase con any en CustomerSearch.test.tsx → Después: Uso de tipado correcto de Vitest (ReturnType<typeof vi.fn>) para el mock. |
-| 3 | Magic Numbers | [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f) | [Antes: X → Después: Y] |
+| 2 | Inseguridad de Tipos (Uso de any) | [`1006d07`](https://github.com/nicoleUg/taller-1/commit/1006d07b0a5e4c9c1dfabf3f3774c10ef27dfb66) | Antes: Casteo de Supabase con any en CustomerSearch.test.tsx → Después: Uso de tipado correcto de Vitest (ReturnType<typeof vi.fn>) para el mock. |
+| 3 | Magic Numbers | [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f) | Antes: Números quemados en aserciones de creditUtils.test.ts (12, 15, 20, 10000) → Después: Extracción de los valores a constantes semánticas. |
 
 ### Detalle — Smell 1: Dead code
 
@@ -327,19 +327,43 @@ import { LoanApproval } from './components/LoanApproval';
 
 **Código antes:**
 ``` typescript
-import { Header } from './components/Header';
-import { CustomerSearch } from './components/CustomerSearch';
-import { CapacityCalculator } from './components/CapacityCalculator';
-import { LoanApproval } from './components/LoanApproval';
-import { ArrowRight } from 'lucide-react';
+describe('getRiesgoTasaInteres', () => {
+  it('debe retornar la tasa de interes correcta segun el nivel de riesgo', () => {
+    expect(getRiesgoTasaInteres('salvo')).toBe(12);
+    expect(getRiesgoTasaInteres('advertencia')).toBe(15);
+    expect(getRiesgoTasaInteres('peligro')).toBe(20);
+  });
+});
+
+describe('calcularSeguroDesgravamen', () => {
+  it('debe calcular el 0.15% del monto total para el seguro', () => {
+    expect(calcularSeguroDesgravamen(10000)).toBe(15);
+  });
+});
 ```
 
 **Código después:**
 ```typescript
-import { Header } from './components/Header';
-import { CustomerSearch } from './components/CustomerSearch';
-import { CapacityCalculator } from './components/CapacityCalculator';
-import { LoanApproval } from './components/LoanApproval';
+const TASA_SALVO = 12;
+const TASA_ADVERTENCIA = 15;
+const TASA_PELIGRO = 20;
+
+const MONTO_PRUEBA = 10000;
+const SEGURO_ESPERADO = 15;
+
+describe('getRiesgoTasaInteres', () => {
+  it('debe retornar la tasa de interes correcta segun el nivel de riesgo', () => {
+    expect(getRiesgoTasaInteres('salvo')).toBe(TASA_SALVO);
+    expect(getRiesgoTasaInteres('advertencia')).toBe(TASA_ADVERTENCIA);
+    expect(getRiesgoTasaInteres('peligro')).toBe(TASA_PELIGRO);
+  });
+});
+
+describe('calcularSeguroDesgravamen', () => {
+  it('debe calcular el 0.15% del monto total para el seguro', () => {
+    expect(calcularSeguroDesgravamen(MONTO_PRUEBA)).toBe(SEGURO_ESPERADO);
+  });
+});
 ```
 
 ---
