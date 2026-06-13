@@ -267,7 +267,7 @@ Mínimo 3 nuevos (adicionales a los del EC2).
 |---|---|---|---|
 | 1 | Dead Code (Imports sin usar) | [`d558177`](https://github.com/nicoleUg/taller-1/commit/d558177c05b2404965b077e0ce192f7f69fda303) | Antes: Importación de ArrowRight no utilizada en App.tsx. → Después: Eliminación del import para limpiar el código y resolver el error de ESLint.|
 | 2 | Inseguridad de Tipos (Uso de any) | [`1006d07`](https://github.com/nicoleUg/taller-1/commit/1006d07b0a5e4c9c1dfabf3f3774c10ef27dfb66) | Antes: Casteo de Supabase con any en CustomerSearch.test.tsx → Después: Uso de tipado correcto de Vitest (ReturnType<typeof vi.fn>) para el mock. |
-| 3 | Magic Numbers | [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f) | Antes: Números quemados en aserciones de creditUtils.test.ts (12, 15, 20, 10000) → Después: Extracción de los valores a constantes semánticas. |
+| 3 | Magic Numbers | [`829e76a`](https://github.com/nicoleUg/taller-1/commit/829e76af3898fb1c2bd638722bf0b9c86af24f91) | Antes: Números quemados en aserciones de creditUtils.test.ts (12, 15, 20, 10000) → Después: Extracción de los valores a constantes semánticas. |
 
 ### Detalle — Smell 1: Dead code
 
@@ -365,7 +365,7 @@ describe('calcularSeguroDesgravamen', () => {
   });
 });
 ```
-
+![reporte Codesmells](capturas/prestamos-code-smells2.png)
 ---
 
 ## Sección 4 — Trazabilidad HU → CA → test
