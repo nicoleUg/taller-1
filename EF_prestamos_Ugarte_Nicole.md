@@ -225,7 +225,7 @@ export function EsCIValido(ci: string): boolean {
 
 ---
 
-**Commit 3 — Refactor** [`1885974`](https://github.com/nicoleUg/taller-1/commit/188597431713b4a6c7632692e447c639238edf7c):
+**Commit 3 — Refactor** [`08a1fc7`](https://github.com/nicoleUg/taller-1/commit/08a1fc733689ebbaa87c00ab100f85acf59c0bd9):
 ```
 refactor: [HU-12] limpiar e implementar expresion regular para validacion de CI
 ```
@@ -250,9 +250,10 @@ export function EsCIValido(ci: string): boolean {
 
 > Captura del reporte de cobertura final:
 
-![Cobertura final](capturas/[proyecto]-cobertura-final.png)
+![Cobertura final](capturas/prestamos-cobertura-final.png)
+![Cobertura final](capturas/prestamos-cobertura-final1.png)
 
-> Si la cobertura es <50%, pegar aquí la justificación enviada al docente:
+> La cobertura del codigo bajo a un 87.73% ya que anteriormente hicimos pruebas de integracion y estas serian como tal pruebas unitarias de negocio que anteriormente no estaban cubiertas
 
 ---
 
