@@ -259,24 +259,33 @@ export function EsCIValido(ci: string): boolean {
 
 ## Sección 3 — Code smells corregidos
 
+![reporte Codesmells](capturas/prestamos-code-smells.png) 
+
 Mínimo 3 nuevos (adicionales a los del EC2).
 
 | # | Tipo | Commit | Descripción |
 |---|---|---|---|
-| 1 | [Tipo] | [`a1b2c3d`](https://github.com/usuario/repo/commit/a1b2c3d) | [Antes: X → Después: Y] |
-| 2 | [Tipo] | [`b2c3d4e`](https://github.com/usuario/repo/commit/b2c3d4e) | [Antes: X → Después: Y] |
-| 3 | [Tipo] | [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f) | [Antes: X → Después: Y] |
+| 1 | Dead Code (Imports sin usar) | [`a1b2c3d`](https://github.com/usuario/repo/commit/a1b2c3d) | [Antes: Importación de ArrowRight no utilizada en App.tsx. → Después: Eliminación del import para limpiar el código y resolver el error de ESLint.] |
+| 2 | Inseguridad de Tipos (Uso de any) | [`b2c3d4e`](https://github.com/usuario/repo/commit/b2c3d4e) | [Antes: X → Después: Y] |
+| 3 | Magic Numbers | [`c3d4e5f`](https://github.com/usuario/repo/commit/c3d4e5f) | [Antes: X → Después: Y] |
 
 ### Detalle — Smell 1: [Tipo]
 
 **Código antes:**
-```csharp / typescript
-// código con el smell
+``` typescript
+import { Header } from './components/Header';
+import { CustomerSearch } from './components/CustomerSearch';
+import { CapacityCalculator } from './components/CapacityCalculator';
+import { LoanApproval } from './components/LoanApproval';
+import { ArrowRight } from 'lucide-react';
 ```
 
 **Código después:**
 ```csharp / typescript
-// código corregido
+import { Header } from './components/Header';
+import { CustomerSearch } from './components/CustomerSearch';
+import { CapacityCalculator } from './components/CapacityCalculator';
+import { LoanApproval } from './components/LoanApproval';
 ```
 
 ---
